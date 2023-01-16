@@ -73,7 +73,11 @@ util.gen_dump_path = function()
   if P.path.sep == "\\" then
     path = string.format("%s\\AppData\\Local\\Temp\\plenary_curl_%s.headers", os.getenv "USERPROFILE", id)
   else
-    path = os.getenv("HOME") .. "/tmp/plenary_curl_" .. id .. ".headers"
+    if os.getenv "TERM_ENV" == "TERMUX" then
+      path = string.format("%s/tmp/plenary_curl_%s.headers", os.getenv "HOME", id)
+    else
+      path = string.format("/tmp/plenary_curl_%s.headers", id)
+    end
   end
   return { "-D", path }
 end
