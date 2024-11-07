@@ -255,7 +255,8 @@ request = function(specs)
     return args
   end
 
-  local job = J:new {
+
+  local job_opts = {
     command = "curl",
     args = args,
     on_exit = function(j, code)
@@ -278,6 +279,20 @@ request = function(specs)
       end
     end,
   }
+
+  if opts.stream then
+    job_opts.on_stdout = opts.stream
+  end
+
+  if opts.on_stderr then
+    job_opts.on_stderr = opts.on_stderr
+  end
+
+  if opts.on_start then
+    job_opts.on_start = opts.on_start
+  end
+
+  local job = J:new(job_opts)
 
   if opts.callback then
     return job
