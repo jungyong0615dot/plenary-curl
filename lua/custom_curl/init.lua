@@ -293,13 +293,8 @@ request = function(specs)
   end
 
   local job = J:new(job_opts)
+  return job
 
-  if opts.callback then
-    return job
-  else
-    job:sync(10000)
-    return response
-  end
 end
 
 -- Main ----------------------------------------------------
